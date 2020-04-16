@@ -45,9 +45,38 @@
         <ion-icon name="walk" slot="start"></ion-icon>
         <ion-label>Card Button Item 2</ion-label>
       </ion-item>
+      
+      <ion-list>
+ 
+        <ion-item *ngFor="let location of locationTraces">
+          <ion-label class="ion-text-wrap">
+            <ion-label>Latitude: {{location.latitude}} Longitude: {{location.longitude}}</ion-label>
+          </ion-label>
+        </ion-item>
+     
+      </ion-list>
+     
+      <div class="ion-text-center">
+     
+        <ng-container *ngIf="!locationWatchStarted; else elseTemplate">
+          <ion-button color="primary" (click)="getGeolocation()">Récupérer Position</ion-button>
+        </ng-container>
+        <ng-template #elseTemplate>
+          Récupération de la position
+        </ng-template>
+     
+      </div>
+
+      <ion-button color="primary" (click)="getNotification()">
+        <ion-label>Afficher Notification</ion-label>
+      </ion-button>
+
+      <ion-button href="/camera-preview">Camera Preview</ion-button>
     </ion-card>
+
     <ion-card *ngIf="imgData">
       <img [src]="imgData">
     </ion-card>
+    
   </div>
 </ion-content>

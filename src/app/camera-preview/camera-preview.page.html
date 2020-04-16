@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Camera Preview 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content [fullscreen]="true" [ngClass]="{'custom-ion-content': isToBack}">
+ 
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" (click)="startCameraAbove()">Caméra Frontale</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="primary" (click)="startCameraBelow()">Caméra Arrière</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" (click)="stopCamera()">Couper Caméra</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button color="success" (click)="takePicture()">Prendre Photo</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="warning" (click)="switchCamera()">Inverser Caméra</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button color="danger" (click)="hide()">Cacher Caméra</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="tertiary" (click)="show()">Afficher Caméra</ion-button>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row *ngIf="IMAGE_PATH">
+      <ion-col>
+        <img [src]="IMAGE_PATH">
+      </ion-col>
+    </ion-row>
+ 
+  </ion-grid>
+ 
+</ion-content>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {AlertController} from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +13,12 @@ export class HomePage {
 
   title: string;
   imgData: string;
+  locationWatchStarted:boolean;
+  locationSubscription:any;
+  locationTraces = [];
 
-  constructor(private alertController: AlertController, private camera: Camera) {}
+  constructor(private alertController: AlertController, private camera: Camera, 
+    private geolocation: Geolocation, private localNotifications: LocalNotifications) {}
 
   updateTitle() {
     this.title = 'Mon Nouveau Titre';
@@ -52,6 +58,51 @@ export class HomePage {
       this.imgData = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
       // Handle error
+    });
+  }
+
+  /*getGeolocation(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+     let watch = this.geolocation.watchPosition();
+     watch.subscribe((data) => {
+      // data can be a set of coordinates, or an error (if an error occurred).
+      // data.coords.latitude
+      // data.coords.longitude
+     });
+  }*/
+
+  getGeolocation() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+ 
+      this.locationTraces.push({
+        latitude:resp.coords.latitude,
+        longitude:resp.coords.longitude,
+      });
+ 
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+ 
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((resp) => {
+      this.locationWatchStarted = true;
+      this.locationTraces.push({
+        latitude:resp.coords.latitude,
+        longitude:resp.coords.longitude,
+      });
+ 
+    });
+  }
+
+  getNotification() {
+    this.localNotifications.schedule({
+      id: 1,
+      text: 'Notification de test'
     });
   }
 
