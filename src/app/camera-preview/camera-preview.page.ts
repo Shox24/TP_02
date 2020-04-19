@@ -10,9 +10,6 @@ export class CameraPreviewPage implements OnInit {
 
   smallPreview:boolean;
   IMAGE_PATH: any;
-  colorEffect = 'none';
-  setZoom = 1;
-  flashMode = 'off';
   isToBack = false;
   constructor(
     private cameraPreview: CameraPreview
@@ -32,7 +29,6 @@ export class CameraPreviewPage implements OnInit {
     this.cameraPreview.startCamera({x: 0, y: 50, width: window.screen.width, height: window.screen.height, camera: "front", tapPhoto: true, previewDrag: false, toBack: true});
   }
   
- 
   stopCamera(){
     this.cameraPreview.stopCamera();
   }
